@@ -38,7 +38,7 @@ def check_code():
 
 @app.route('/')
 def serve_index():
-    return send_from_directory(os.getcwd(), 'index1.html')
+    return send_from_directory(os.getcwd(), 'index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
