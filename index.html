@@ -14,52 +14,33 @@
         </div>
     </div>
 
-    <script>
-        function toggleInputFields() {
-            const inputSection = document.querySelector('.input-section');
-            const inputContainer = document.querySelector('.input-container');
-            const code = prompt("Digite o código para desocultar os campos de entrada:");
-            
-            if (code) {  // Verifica se o código foi inserido
-                fetch('/check_code', {
-                    method: 'POST',  // Certifique-se de que o método é POST
-                    headers: {
-                        'Content-Type': 'application/json',  // Define o tipo de conteúdo como JSON
-                    },
-                    body: JSON.stringify({ code: code }),  // Envia o código como JSON
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erro na requisição: ' + response.statusText);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.status === 'success') {
-                        // Exibe as seções de entrada
-                        inputSection.style.display = 'block';
-                        inputContainer.style.display = 'block';
-
-                        document.getElementById('toggle-code').textContent = 'Admin'; // Exibe **** no botão
-
-                        // Define um temporizador para ocultar os campos após 10 segundos (10000 milissegundos)
-                        setTimeout(() => {
-                            inputSection.style.display = 'none'; // Oculta a .input-section
-                            inputContainer.style.display = 'none'; // Oculta a .input-container
-                            document.getElementById('toggle-code').textContent = 'Administrador'; // Restaura o texto do botão
-                        }, 10000); // 10 segundos em milissegundos
-                    } else {
-                        alert(data.message); // Exibe a mensagem de erro
-                    }
-                })
-                .catch(error => {
-                    console.error("Erro ao verificar o código:", error);
-                    alert("Ocorreu um erro ao tentar verificar o código.");
-                });
+   <script>
+function toggleInputFields() {
+    const code = prompt("Digite o código para desocultar os campos de entrada:");
+    
+    if (code) {
+        fetch('/check_code', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', // Especifica que está enviando JSON
+            },
+            body: JSON.stringify({ code: code }) // Envia o código em JSON
+        })
+        .then(response => response.json()) // Converte a resposta para JSON
+        .then(data => {
+            if (data.status === 'success') {
+                alert("Código correto! Campos desbloqueados.");
             } else {
-                alert("Por favor, insira um código.");
+                alert("Código incorreto!");
             }
-        }
-    </script>
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert("Erro ao verificar o código.");
+        });
+    }
+}
+</script>
+
 </body>
 </html>
