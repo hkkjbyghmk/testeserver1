@@ -22,11 +22,11 @@
             
             if (code) {  // Verifica se o código foi inserido
                 fetch('/check_code', {
-                    method: 'POST',
+                    method: 'POST',  // Certifique-se de que o método é POST
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json',  // Define o tipo de conteúdo como JSON
                     },
-                    body: JSON.stringify({ code: code }),
+                    body: JSON.stringify({ code: code }),  // Envia o código como JSON
                 })
                 .then(response => {
                     if (!response.ok) {
